@@ -1,0 +1,14 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/private/accounts/abcd"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "attributes": {
+        "email": "some@where.com"
+      }
+    }
+  }
+}

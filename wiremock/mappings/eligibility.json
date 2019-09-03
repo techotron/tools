@@ -1,0 +1,18 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/api/v2/accounts-bundle-eligibility",
+    "bodyPatterns" : [ { "contains": "some@where.com" } ],
+    "headers": {
+      "Content-Type": {
+        "matches": "application/json"
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "eligibility": "ELIGIBLE"
+    }
+  }
+}

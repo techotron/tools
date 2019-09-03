@@ -1,0 +1,1 @@
+docker run -e GITHUB_API_RO=$GITHUB_API_RO github-tools:latest

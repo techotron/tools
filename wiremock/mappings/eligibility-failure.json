@@ -1,0 +1,18 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/api/v2/accounts-bundle-eligibility",
+    "bodyPatterns" : [ { "contains": "failing@account.com" } ],
+    "headers": {
+      "Content-Type": {
+        "matches": "application/json"
+      }
+    }
+  },
+  "response": {
+    "status": 500,
+    "jsonBody": {
+      "error": "hulu error"
+    }
+  }
+}

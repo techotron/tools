@@ -1,0 +1,14 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/private/accounts/efgh"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "attributes": {
+        "email": "failing@account.com"
+      }
+    }
+  }
+}
