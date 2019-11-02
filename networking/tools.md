@@ -36,7 +36,7 @@ This is an area for notes about general networking tools and utilities, with qui
 
 - Check connection number using `nmcli`
 - Run `sudo nmcli connection modify System\ ens5 ipv4.method manual ipv4.address <NEW_IP/CIDR> ipv4.gateway <GW_IP>>`. This won't change anything, need to restart the interface
-- Bring interface down and up: `sudo nmcli connection down System\ ens5` and `sudo nmcli connection up System\ ens5`
+- Bring interface down and up: `sudo nmcli connection down System\ ens5` and `sudo nmcli connection up System\ ens5` (can also use `systemctl restart network`)
 - Add DNS server to interface properties: `sudo nmcli connection modify System\ ens5 ipv4.dns <DNS_IP>` (followed by interface restart as above)
 - Change it back to DHCP: `sudo nmcli connection modify System\ ens5 ipv4.method auto ipv4.address "" ipv4.dns "" ipv4.gateway ""` (followed by interface restart as above)
 
