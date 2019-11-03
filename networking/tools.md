@@ -62,7 +62,7 @@ Assuming you have 2 cards setup already.
 - Need to use `teamd` so install: `yum install -y teamd bash-completion` and reload profile to enable `bash-completion`
 - View network connections: `nmcli c`
 - If you want to delete the connections to the interfaces using NetworkManager: `sudo nmcli connection delete Name\ of\ connection\ 1`
-- Create team connection: `sudo nmcli connection add type team con-name Team0 ifname team0 team.config '{"runner":{"name": "activebackup"}, "link_watch": {"name": "ethtool"}}'
+- Create team connection: `sudo nmcli connection add type team con-name Team0 ifname team0 team.config '{"runner":{"name": "activebackup"}, "link_watch": {"name": "ethtool"}}'`
 - **Note:** Check teamd's example configs: `cat /usr/share/doc/teamd-<version>/example_configs/<list_of_configs>`
 - Add slave interfaces: `sudo nmcli connection add type team-slave con-name slave1 ifname eth1 master team0` and a second slave interface: `sudo nmcli connection add type team-slave con-name slave2 ifname eth2 master team0`
 - Add settings to the team interface: `sudo nmcli connection modify Team0 ipv4.addresses <IP_ADD/CIDR> ipv4.gateway <GW_IP> ipv4.method manual`
