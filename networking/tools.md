@@ -10,6 +10,7 @@ This is an area for notes about general networking tools and utilities, with qui
 - Route information: `ip route show` - this will show the default route
 - Detailed route tabl: `routel`
 - Show IP neighbours (ARP table): `ip n`
+- Force `ping` through specific interface: `ping -I eth1 1.1.1.1`
 
 ## DNS
 
@@ -70,3 +71,35 @@ Assuming you have 2 cards setup already.
 - Bring slaves up, then team: `sudo nmcli con up slave1 && sudo nmcli con up slave2` and then the team interface: `sudo nmcli con up Team0`
 - Check state of team interface using teamd: `teamdctl team0 state`
 - If we wanted to use round robin runner, create the team interface in the same way but don't specify a team.config. Round robin is the default. Confirm this using the above `teamdctl` command. 
+
+## Routing
+
+- Show routing table: `ip r`. You can also use `nmcli` and check the listed routes there.
+- Prohibit traffic to IP: `ip route add prohibit 1.1.1.1`. This will result in a ping failing with: 
+
+> Do you want to ping broadcast? Then -b. If not, check your local firewall rules.
+
+And a curl failing with:
+
+> curl: (7) Failed to connect to 1.1.1.1: Permission denied
+
+- Similar result would be to blackhole the IP: `ip route add blackhole 1.1.1.1`
+
+Ping result:
+
+> connect: Invalid argument
+
+Curl result: 
+
+> curl: (7) Failed to connect to 1.1.1.1: Invalid argument
+
+- Same with `unreachable` - message back is 
+
+> No route to host
+
+- Remove route (such as the example above: `ip route del prohibit 1.1.1.1`
+- These route changes will not persist a system restart (they would persist a network restart though). To create persistent routes, you'd need to add the route to `/etc/sysconfig/network-scripts/route-<INTERFACE_NAME>`.
+
+- To create a route out through a specific interface: `ip route add 1.1.1.1 via <GW_IP> dev eth0`
+- Create a route out through a specific gateway: `ip route add 1.1.1.1 via <GW_IP>`
+- Create route for network: `ip route add 10.0.8.0/24 via <GW_IP>`
