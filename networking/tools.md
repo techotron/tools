@@ -108,4 +108,4 @@ Curl result:
 
 - Name Service Switch file: `/etc/nsswitch.conf`. This is used by `getent`, eg: `getent ahosts latoys.com`
 - Check the ordering by the "hosts" field in the .conf file. By default, this is `files dns myhostname`. However, if you used one of the tools in the "bind-utils" package (eg `host latoys.com`), you'd find that it would use DNS and ignore the value of /etc/hosts.
-
+- Use a public DNS server to resolve a host: Google: `dig @8.8.8.8 <HOSTNAME>` Cloud Flare: `dig @1.1.1.1 <HOSTNAME>`
