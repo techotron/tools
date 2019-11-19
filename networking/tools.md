@@ -75,6 +75,7 @@ Assuming you have 2 cards setup already.
 ## Routing
 
 - Show routing table: `ip r`. You can also use `nmcli` and check the listed routes there.
+- Flush routing table: `ip route flush 123.123.123.123` or `ip r f 123.123.123.123`
 - Prohibit traffic to IP: `ip route add prohibit 1.1.1.1`. This will result in a ping failing with: 
 
 > Do you want to ping broadcast? Then -b. If not, check your local firewall rules.
@@ -99,7 +100,12 @@ Curl result:
 
 - Remove route (such as the example above: `ip route del prohibit 1.1.1.1`
 - These route changes will not persist a system restart (they would persist a network restart though). To create persistent routes, you'd need to add the route to `/etc/sysconfig/network-scripts/route-<INTERFACE_NAME>`.
-
 - To create a route out through a specific interface: `ip route add 1.1.1.1 via <GW_IP> dev eth0`
 - Create a route out through a specific gateway: `ip route add 1.1.1.1 via <GW_IP>`
 - Create route for network: `ip route add 10.0.8.0/24 via <GW_IP>`
+
+## Local Name Resolution
+
+- Name Service Switch file: `/etc/nsswitch.conf`. This is used by `getent`, eg: `getent ahosts latoys.com`
+- Check the ordering by the "hosts" field in the .conf file. By default, this is `files dns myhostname`. However, if you used one of the tools in the "bind-utils" package (eg `host latoys.com`), you'd find that it would use DNS and ignore the value of /etc/hosts.
+
