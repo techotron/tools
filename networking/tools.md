@@ -154,3 +154,8 @@ ns1.memset.com.         1800    IN      A       89.200.136.74
 ;; WHEN: Tue Nov 19 22:49:52 GMT 2019
 ;; MSG SIZE  rcvd: 211
 ```
+
+- Check how old the query cache is: `dig <HOSTNAME> +noall +answer`
+- When we see `NXDOMAIN` in the "status:" section of a dig response, this means the domain does not exist.
+
+## Firewalls
