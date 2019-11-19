@@ -110,4 +110,47 @@ Curl result:
 - Check the ordering by the "hosts" field in the .conf file. By default, this is `files dns myhostname`. However, if you used one of the tools in the "bind-utils" package (eg `host latoys.com`), you'd find that it would use DNS and ignore the value of /etc/hosts.
 - Use a public DNS server to resolve a host: Google: `dig @8.8.8.8 <HOSTNAME>` Cloud Flare: `dig @1.1.1.1 <HOSTNAME>`
 - Get list of Nameservers for a domain: `dig NS <HOSTNAME>`. You can tell if the reponse is authoritative or not by the "AUTHORITY: N" (where "N" is a number. 0 means no authority).
-- Using one of the NS in the response above, you can get an authoritative resolution for a host: `dig @<NAMESERVER_FROM_ABOVE> <HOSTNAME>`
+- Using one of the NS in the response above, you can get an authoritative resolution for a host: `dig @<NAMESERVER_FROM_ABOVE> <HOSTNAME>`. Example response:
+
+> flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 3, ADDITIONAL: 6
+
+**Note:** The "qr aa rd" means: "query request", "authoritative answer" and "recursion desired"
+**Note:** The rest means, 1 query requested, 1 answer given, 3 authoritative nameservers and an additional 6 non-auth NS.
+
+So for `dig @ns3.memset.com snow-online.co.uk`
+
+The answer was:
+
+```bash
+; <<>> DiG 9.10.6 <<>> @ns3.memset.com snow-online.co.uk
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 12940
+;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 3, ADDITIONAL: 6
+;; WARNING: recursion requested but not available
+
+;; QUESTION SECTION:
+;snow-online.co.uk.             IN      A
+
+;; ANSWER SECTION:
+snow-online.co.uk.      300     IN      A       92.222.3.151
+
+;; AUTHORITY SECTION:
+snow-online.co.uk.      7200    IN      NS      ns3.memset.com.
+snow-online.co.uk.      7200    IN      NS      ns2.memset.com.
+snow-online.co.uk.      7200    IN      NS      ns1.memset.com.
+
+;; ADDITIONAL SECTION:
+ns3.memset.com.         7200    IN      A       31.222.188.99
+ns3.memset.com.         1800    IN      A       31.222.188.99
+ns2.memset.com.         7200    IN      A       78.31.107.87
+ns2.memset.com.         1800    IN      A       78.31.107.87
+ns1.memset.com.         7200    IN      A       89.200.136.74
+ns1.memset.com.         1800    IN      A       89.200.136.74
+
+;; Query time: 29 msec
+;; SERVER: 31.222.188.99#53(31.222.188.99)
+;; WHEN: Tue Nov 19 22:49:52 GMT 2019
+;; MSG SIZE  rcvd: 211
+```
