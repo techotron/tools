@@ -4,6 +4,8 @@
 
 - Multi-AZ RDS solutions are synchronous but read-only replicas are asynchronous.
 - Updates during maintance periods will take place on secondary instance, then CNAME will change to "promote" secondary instance to new primary instance and update will then take place on the other instance.
+- Multi-AZ failover will around 1 minute impact.
+- In order to enable read-replicas, automatic backups needs to be enabled on the master.
 - The following RDS types allow read-only replicas:
 -- MySQL (Async)
 -- MariaDB (Async)
@@ -49,6 +51,12 @@
 -- Same approach as a stand-alone instance of MySQL and PostgreSQL
 -- IAM DB authentication. This uses an IAM user or role with an authentication token. The token is a unique value that is generated using Signature Version 4 signing process. Don't need a password with this method - tokens are granted on request and last 15 minutes.
 - Can use encryption at rest
+
+#### Data Storage (Aurora)
+
+- Replicas use a virtual volume model. Data is copied on the data plane. 
+- Instance use the data plane to read/write data, rather than have their "own" storage volume.
+- High watermark storage means deleting X amount of data doesn't free up any used data. You still have to pay for the largest storage you've previsouly used. To get around this, you'd have to create a new cluster and migrate data to there. 
 
 ## Security
 
