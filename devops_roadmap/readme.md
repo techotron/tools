@@ -4,38 +4,73 @@ Links to resources based on [this roadmap](https://roadmap.sh/devops)
 
 # Table of Contents
 
-[Thing1](https://github.com/techotron/tools/tree/master/devops_roadmap#thing1)
+[Learn a Programming Language](https://github.com/techotron/tools/tree/master/devops_roadmap#LearnProgrammingLanguage)
 
-* [Thing1.1](https://github.com/techotron/tools/tree/master/devops_roadmap#thing1.1)
+* [Python](https://github.com/techotron/tools/tree/master/devops_roadmap#Python)
+* [Ruby](https://github.com/techotron/tools/tree/master/devops_roadmap#Ruby)
+* [Node.js](https://github.com/techotron/tools/tree/master/devops_roadmap#Node.js)
+* [Go](https://github.com/techotron/tools/tree/master/devops_roadmap#Go)
+* [Rust](https://github.com/techotron/tools/tree/master/devops_roadmap#Rust)
+* [C](https://github.com/techotron/tools/tree/master/devops_roadmap#C)
+* [C++](https://github.com/techotron/tools/tree/master/devops_roadmap#C++)
 
-* [Thing1.2](https://github.com/techotron/tools/tree/master/devops_roadmap#thing1.2)
-  - [Thing1.2.1](https://github.com/techotron/tools/tree/master/devops_roadmap#thing1.2.1)
+[Understand different OS Concepts](https://github.com/techotron/tools/tree/master/devops_roadmap#UnderstandDifferentOsConcepts)
 
-[Thing2](https://github.com/techotron/tools/tree/master/devops_roadmap#thing2)
+[Learn about managing software](https://github.com/techotron/tools/tree/master/devops_roadmap#LearnAboutManagingSoftware)
 
-* [Thing2.1](https://github.com/techotron/tools/tree/master/devops_roadmap#thing2.1)
+[Networking, Security and Protocols](https://github.com/techotron/tools/tree/master/devops_roadmap#NetworkingSecurityProtocols)
+
+[What is and how to setup a..](https://github.com/techotron/tools/tree/master/devops_roadmap#WhatIsAndHowToSetupA)
+
+[Learn infrastructure as code](https://github.com/techotron/tools/tree/master/devops_roadmap#LearnIaC)
+
+[Learn some CICD tools](https://github.com/techotron/tools/tree/master/devops_roadmap#LearnSomeCiCd)
+
+[Learn how to monitor software and infrastructure](https://github.com/techotron/tools/tree/master/devops_roadmap#LearnHowToMonitorSoftwareAndInfra)
+
+[Cloud providers](https://github.com/techotron/tools/tree/master/devops_roadmap#CloudProviders)
+
+[Cloud Design Patterns](https://github.com/techotron/tools/tree/master/devops_roadmap#CloudDesignPatterns)
 
 
-## Thing1
+## LearnProgrammingLanguage
 
-asddasa
+### Python
 
-### Thing1.1
+### Ruby
 
-asdsad
+### Node.js
 
-### Thing1.2
+### Go
 
-asd
+### Rust
 
-#### Thing1.2.1
+### C
 
-asdasdas
+### C++
 
-## Thing2
+## UnderstandDifferentOsConcepts
 
-123123
 
-### Thing2.1
+## LearnAboutManagingSoftware
 
-asdas
+
+## NetworkingSecurityProtocols
+
+
+## WhatIsAndHowToSetupA
+
+
+## LearnIaC
+
+
+## LearnSomeCiCd
+
+
+## LearnHowToMonitorSoftwareAndInfra
+
+
+## CloudProviders
+
+
+## CloudDesignPatterns
