@@ -400,7 +400,8 @@ strace, dtrace, systemtap, uname, df, history
 
 ### Chaos Testing
 
-[] - [Principals of Chaos Engineering](http://principlesofchaos.org/?lang=ENcontent)
+[x] - [Principals of Chaos Engineering](http://principlesofchaos.org/?lang=ENcontent)
+[/] - [Principals of Chaos Engineering](http://principlesofchaos.org/?lang=ENcontent)
 
 ## Cloud Providers
 
