@@ -1,41 +1,106 @@
-# DevOps Roadmap
+- [LearnProgrammingLanguage](#learnprogramminglanguage)
+  * [Python](#python)
+  * [Ruby](#ruby)
+  * [Node.js](#nodejs)
+  * [Go](#go)
+  * [Rust](#rust)
+  * [C](#c)
+  * [C++](#c--)
+- [UnderstandDifferentOsConcepts](#understanddifferentosconcepts)
+  * [ProcessMgmt](#processmgmt)
+  * [ThreadsAndConcurrenncy](#threadsandconcurrenncy)
+  * [Sockets](#sockets)
+  * [POSIXBasics](#posixbasics)
+  * [NetworkingConcepts](#networkingconcepts)
+  * [StartupMgmt](#startupmgmt)
+  * [ServiceMgmt](#servicemgmt)
+  * [IOMgmt](#iomgmt)
+  * [ProcessManagement](#processmanagement)
+  * [MemoryStorage](#memorystorage)
+  * [FileSystems](#filesystems)
+- [LearnAboutManagingServers](#learnaboutmanagingservers)
+  * [OperatingSystem](#operatingsystem)
+    + [Linux](#linux)
+    + [Unix](#unix)
+    + [Windows](#windows)
+  * [LearnToLiveInTerminal](#learntoliveinterminal)
+- [NetworkingSecurityProtocols](#networkingsecurityprotocols)
+- [WhatIsAndHowToSetupA](#whatisandhowtosetupa)
+- [LearnIaC](#learniac)
+- [LearnSomeCiCd](#learnsomecicd)
+- [LearnHowToMonitorSoftwareAndInfra](#learnhowtomonitorsoftwareandinfra)
+- [CloudProviders](#cloudproviders)
+- [CloudDesignPatterns](#clouddesignpatterns)
 
-Links to resources based on [this roadmap](https://roadmap.sh/devops)
 
-# Table of Contents
+## LearnProgrammingLanguage
 
-[Thing1](https://github.com/techotron/tools/tree/master/devops_roadmap#thing1)
+### Python
 
-* [Thing1.1](https://github.com/techotron/tools/tree/master/devops_roadmap#thing1.1)
+### Ruby
 
-* [Thing1.2](https://github.com/techotron/tools/tree/master/devops_roadmap#thing1.2)
-  - [Thing1.2.1](https://github.com/techotron/tools/tree/master/devops_roadmap#thing1.2.1)
+### Node.js
 
-[Thing2](https://github.com/techotron/tools/tree/master/devops_roadmap#thing2)
+### Go
 
-* [Thing2.1](https://github.com/techotron/tools/tree/master/devops_roadmap#thing2.1)
+### Rust
+
+### C
+
+### C++
+
+## UnderstandDifferentOsConcepts
+
+### ProcessMgmt
+
+### ThreadsAndConcurrenncy
+
+### Sockets
+
+### POSIXBasics
+
+### NetworkingConcepts
+
+### StartupMgmt
+
+### ServiceMgmt
+
+### IOMgmt
+
+### ProcessManagement
+
+### MemoryStorage
+
+### FileSystems
+
+## LearnAboutManagingServers
+
+### OperatingSystem
+
+#### Linux
+
+#### Unix
+
+#### Windows
+
+### LearnToLiveInTerminal
+
+## NetworkingSecurityProtocols
 
 
-## Thing1
+## WhatIsAndHowToSetupA
 
-asddasa
 
-### Thing1.1
+## LearnIaC
 
-asdsad
 
-### Thing1.2
+## LearnSomeCiCd
 
-asd
 
-#### Thing1.2.1
+## LearnHowToMonitorSoftwareAndInfra
 
-asdasdas
 
-## Thing2
+## CloudProviders
 
-123123
 
-### Thing2.1
-
-asdas
+## CloudDesignPatterns
