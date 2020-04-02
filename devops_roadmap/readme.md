@@ -12,11 +12,29 @@ Links to resources based on [this roadmap](https://roadmap.sh/devops)
 * [Go](https://github.com/techotron/tools/tree/master/devops_roadmap#Go)
 * [Rust](https://github.com/techotron/tools/tree/master/devops_roadmap#Rust)
 * [C](https://github.com/techotron/tools/tree/master/devops_roadmap#C)
-* [C++](https://github.com/techotron/tools/tree/master/devops_roadmap#C++)
+* [C++](https://github.com/techotron/tools/tree/master/devops_roadmap#c-1)
 
 [Understand different OS Concepts](https://github.com/techotron/tools/tree/master/devops_roadmap#UnderstandDifferentOsConcepts)
 
-[Learn about managing software](https://github.com/techotron/tools/tree/master/devops_roadmap#LearnAboutManagingSoftware)
+* [Process Management](https://github.com/techotron/tools/tree/master/devops_roadmap#ProcessMgmt)
+* [Threads and Concurrency](https://github.com/techotron/tools/tree/master/devops_roadmap#ThreadsAndConcurrenncy)
+* [Sockets](https://github.com/techotron/tools/tree/master/devops_roadmap#Sockets)
+* [POSIX Basics](https://github.com/techotron/tools/tree/master/devops_roadmap#POSIXBasics)
+* [Networking Concepts](https://github.com/techotron/tools/tree/master/devops_roadmap#NetworkingConcepts)
+* [Startup Management (initd)](https://github.com/techotron/tools/tree/master/devops_roadmap#StartupMgmt)
+* [Service Management (systemd)](https://github.com/techotron/tools/tree/master/devops_roadmap#ServiceMgmt)
+* [I/O Management](https://github.com/techotron/tools/tree/master/devops_roadmap#IOMgmt)
+* [Virtualization](https://github.com/techotron/tools/tree/master/devops_roadmap#ProcessManagement)
+* [Memory/Storage](https://github.com/techotron/tools/tree/master/devops_roadmap#MemoryStorage)
+* [File Systems](https://github.com/techotron/tools/tree/master/devops_roadmap#FileSystems)
+
+[Learn about managing servers](https://github.com/techotron/tools/tree/master/devops_roadmap#LearnAboutManagingServers)
+
+* [Operating System](https://github.com/techotron/tools/tree/master/devops_roadmap#OperatingSystem)
+
+
+
+* [Learn To Live In Terminal](https://github.com/techotron/tools/tree/master/devops_roadmap#LearnToLiveInTerminal)
 
 [Networking, Security and Protocols](https://github.com/techotron/tools/tree/master/devops_roadmap#NetworkingSecurityProtocols)
 
@@ -51,9 +69,33 @@ Links to resources based on [this roadmap](https://roadmap.sh/devops)
 
 ## UnderstandDifferentOsConcepts
 
+### ProcessMgmt
 
-## LearnAboutManagingSoftware
+### ThreadsAndConcurrenncy
 
+### Sockets
+
+### POSIXBasics
+
+### NetworkingConcepts
+
+### StartupMgmt
+
+### ServiceMgmt
+
+### IOMgmt
+
+### ProcessManagement
+
+### MemoryStorage
+
+### FileSystems
+
+## LearnAboutManagingServers
+
+### OperatingSystem
+
+### LearnToLiveInTerminal
 
 ## NetworkingSecurityProtocols
 
