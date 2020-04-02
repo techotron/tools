@@ -168,7 +168,7 @@ Links to resources based on [this roadmap](https://roadmap.sh/devops)
 
 ### Startup Management
 
-[] - [Managing Linux Init/startup scripts](http://www.debianadmin.com/manage-linux-init-or-startup-scripts.html)
+- [Managing Linux Init/startup scripts](http://www.debianadmin.com/manage-linux-init-or-startup-scripts.html)
 
 ### Service Management
 
@@ -400,8 +400,7 @@ strace, dtrace, systemtap, uname, df, history
 
 ### Chaos Testing
 
-[x] - [Principals of Chaos Engineering](http://principlesofchaos.org/?lang=ENcontent)
-[/] - [Principals of Chaos Engineering](http://principlesofchaos.org/?lang=ENcontent)
+- [Principals of Chaos Engineering](http://principlesofchaos.org/?lang=ENcontent)
 
 ## Cloud Providers
 
