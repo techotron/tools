@@ -282,7 +282,7 @@ nginx
 
 ### Caching Server
 
-redis, varnish
+redis, varnish, memcached
 
 ### Forward Proxy
 
