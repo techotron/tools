@@ -31,8 +31,9 @@ Links to resources based on [this roadmap](https://roadmap.sh/devops)
 [Learn about managing servers](https://github.com/techotron/tools/tree/master/devops_roadmap#LearnAboutManagingServers)
 
 * [Operating System](https://github.com/techotron/tools/tree/master/devops_roadmap#OperatingSystem)
-
-
+  - [Linux](https://github.com/techotron/tools/tree/master/devops_roadmap#Linux)
+  - [Unix](https://github.com/techotron/tools/tree/master/devops_roadmap#Unix)
+  - [Windows](https://github.com/techotron/tools/tree/master/devops_roadmap#Windows)
 
 * [Learn To Live In Terminal](https://github.com/techotron/tools/tree/master/devops_roadmap#LearnToLiveInTerminal)
 
@@ -94,6 +95,12 @@ Links to resources based on [this roadmap](https://roadmap.sh/devops)
 ## LearnAboutManagingServers
 
 ### OperatingSystem
+
+#### Linux
+
+#### Unix
+
+#### Windows
 
 ### LearnToLiveInTerminal
 
