@@ -230,7 +230,7 @@ nmon, iostat, sar, vmstat
 
 #### Text Manipulation Tools
 
-awk, sed, grep, sort, uniq, cat, cut, echo, fmt, tr, nl, egrep, fgrep, wc
+awk, sed, grep, sort, uniq, cat, cut, echo, fmt, tr, nl, egrep, fgrep, wc, jq
 
 #### Process Monitoring
 
