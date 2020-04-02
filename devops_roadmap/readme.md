@@ -426,4 +426,6 @@ strace, dtrace, systemtap, uname, df, history
 
 ### Design and Implementation
 
+- [System Design Primer](https://github.com/donnemartin/system-design-primer)
+
 ### Management and Monitoring
