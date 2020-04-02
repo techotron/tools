@@ -2,6 +2,8 @@
 
 Links to resources based on [this roadmap](https://roadmap.sh/devops)
 
+A fair bit on content for this has been sourced from [system-design-primer](https://github.com/donnemartin/system-design-primer#nosql)
+
 # Table of Contents
 
 - [Learn a programming language](#learn-a-programming-language)
@@ -64,9 +66,19 @@ Links to resources based on [this roadmap](https://roadmap.sh/devops)
   * [Port Forwarding](#port-forwarding)
 - [What is and How to Setup a...](#what-is-and-how-to-setup-a)
   * [Reverse Proxy](#reverse-proxy)
+    + [Concepts](#concepts)
+    + [Nginx](#nginx)
+    + [HAProxy](#haproxy)
   * [Caching Server](#caching-server)
+    + [Redis](#redis)
+    + [Varnish](#varnish)
+    + [Memcached](#memcached)
+    + [DAX (AWS DDB Cache)](#dax--aws-ddb-cache-)
   * [Forward Proxy](#forward-proxy)
   * [Load Balancer](#load-balancer)
+    + [Concepts](#concepts-1)
+    + [Nginx](#nginx-1)
+    + [HAProxy](#haproxy-1)
   * [Firewall](#firewall)
   * [Queuing and Streaming Systems](#queuing-and-streaming-systems)
     + [Pub/Sub Model](#pub-sub-model)
@@ -77,19 +89,37 @@ Links to resources based on [this roadmap](https://roadmap.sh/devops)
     + [Kinesis (AWS)](#kinesis--aws-)
   * [Web Server](#web-server)
     + [IIS](#iis)
-    + [Nginx](#nginx)
+    + [Nginx](#nginx-2)
     + [Apache](#apache)
     + [Tomcat](#tomcat)
     + [Caddy](#caddy)
+  * [Databases](#databases)
+    + [Concepts](#concepts-2)
+    + [SQL (Relational)](#sql--relational-)
+      - [MSSQL](#mssql)
+      - [MariaDB](#mariadb)
+      - [PostgreSQL](#postgresql)
+    + [NoSQL](#nosql)
+      - [DynamoDB](#dynamodb)
+      - [MongoDB](#mongodb)
+      - [CouchDB](#couchdb)
+      - [RocksDB](#rocksdb)
+      - [HBase](#hbase)
+      - [Cassandra](#cassandra)
+    + [Key/Value](#key-value)
+      - [Etcd](#etcd)
+      - [Consul](#consul)
 - [Learn Infrastructure as Code](#learn-infrastructure-as-code)
   * [Containers](#containers)
     + [Docker](#docker)
     + [LXC](#lxc)
+    + [Packer (Image Building)](#packer--image-building-)
   * [Configuration Management](#configuration-management)
     + [Ansible](#ansible)
     + [Salt](#salt)
     + [Puppet](#puppet)
     + [Chef](#chef)
+    + [PowerShell DSC](#powershell-dsc)
   * [Container Orchestration](#container-orchestration)
     + [Kubernetes](#kubernetes)
     + [Mesos](#mesos)
@@ -103,7 +133,7 @@ Links to resources based on [this roadmap](https://roadmap.sh/devops)
     + [Istio](#istio)
     + [Envoy](#envoy)
     + [Linkerd](#linkerd)
-    + [Consul](#consul)
+    + [Consul](#consul-1)
 - [Learn some CI/CD tools](#learn-some-ci-cd-tools)
   * [Gitlab CI](#gitlab-ci)
   * [Github Actions](#github-actions)
@@ -132,6 +162,7 @@ Links to resources based on [this roadmap](https://roadmap.sh/devops)
     + [Graylog](#graylog)
     + [Splunk](#splunk)
     + [Papertrail](#papertrail)
+    + [Sysdig](#sysdig)
   * [Chaos Testing](#chaos-testing)
 - [Cloud Providers](#cloud-providers)
   * [AWS](#aws)
@@ -144,6 +175,7 @@ Links to resources based on [this roadmap](https://roadmap.sh/devops)
 - [Cloud Design Patterns](#cloud-design-patterns)
   * [Availability](#availability)
   * [Data Management](#data-management)
+    + [CDNs](#cdns)
   * [Design and Implementation](#design-and-implementation)
   * [Management and Monitoring](#management-and-monitoring)
 
@@ -289,13 +321,40 @@ strace, dtrace, systemtap, uname, df, history
 
 ### Reverse Proxy
 
-nginx
+#### Concepts
+
+Reverse proxies centralise internal services and provides public access to those services. The features are typically found on load balancers which makes the distinction a little blurry. 
+
+- [Reverse Proxy vs Load Balancer](https://www.nginx.com/resources/glossary/reverse-proxy-vs-load-balancer/)
+
+Benefits include:
+
+- Increased security (allows keeping backends out of public facing subnets, abiliy to blacklist IPs)
+- Increase scalability options
+- SSL termination
+- Compression
+- Caching
+- Static content serving (rather than retrieving from the backend server directly)
+
+#### Nginx
+
+#### HAProxy
 
 ### Caching Server
 
-redis, varnish, memcached, DAX (AWS DDB Cache)
-
 - [Brief Caching Intro](https://www.lecloud.net/post/9246290032/scalability-for-dummies-part-3-cache)
+
+#### Redis
+
+- [Architecture Overview](http://qnimate.com/overview-of-redis-architecture/)
+
+#### Varnish
+
+#### Memcached
+
+- [Architecture Overview](https://www.adayinthelifeof.nl/2011/02/06/memcache-internals/)
+
+#### DAX (AWS DDB Cache)
 
 ### Forward Proxy
 
@@ -303,15 +362,23 @@ redis, varnish, memcached, DAX (AWS DDB Cache)
 
 #### Concepts
 
-- [Layer 4 LB](https://github.com/donnemartin/system-design-primer#layer-4-load-balancing)
+- [Layer 4 LB])(https://www.nginx.com/resources/glossary/layer-4-load-balancing/):
 
-  > Checks the IP source/destination and port headers in the packet, performing NAT
+  Checks the IP source/destination and port headers in the packet, performing NAT.
 
-- [Layer 7 LB]()
+- [Layer 7 LB](https://www.nginx.com/resources/glossary/layer-7-load-balancing/):
+
+  Looks at the application layer (such as contents of the header, message and cookies) to decide how to distribute requests. The LB will need to decrypt SSL/TLS traffic to inspect the contents.
+
+Layer 4 LBs are more performant, at the cost of flexibility, compared with layer 7 LBs. This difference is usually negligable with modern hardware.
 
 #### Nginx
 
+- [Architecture Guide](https://www.nginx.com/blog/inside-nginx-how-we-designed-for-performance-scale/)
+
 #### HAProxy
+
+- [Architecture Guide](http://www.haproxy.org/download/1.2/doc/architecture.txt)
 
 ### Firewall
 
@@ -343,7 +410,15 @@ redis, varnish, memcached, DAX (AWS DDB Cache)
 
 #### Caddy
 
-### Database Server
+### Databases
+
+#### Concepts
+
+- [ACID](https://github.com/donnemartin/system-design-primer#relational-database-management-system-rdbms)
+- [Federated (functional partitioning)](https://github.com/donnemartin/system-design-primer#federation)
+- [Sharding](https://github.com/donnemartin/system-design-primer#sharding)
+- [Denormalization](https://github.com/donnemartin/system-design-primer#denormalization)
+- [SQL Tuning](https://github.com/donnemartin/system-design-primer#sql-tuning)
 
 #### SQL (Relational)
 
@@ -355,13 +430,29 @@ redis, varnish, memcached, DAX (AWS DDB Cache)
 
 #### NoSQL
 
+- [Overview](https://github.com/donnemartin/system-design-primer#nosql)
+
+##### DynamoDB
+
 ##### MongoDB
 
 ##### CouchDB
 
+##### RocksDB
+
+##### HBase
+
+- [Architecture Overview](https://mapr.com/blog/in-depth-look-hbase-architecture/)
+
+##### Cassandra
+
+- [Architechure Overview](http://cassandra.apache.org/doc/latest/architecture/overview.html)
+
 #### Key/Value
 
-##### Ectd
+##### Etcd
+
+##### Consul
 
 ## Learn Infrastructure as Code
 
@@ -382,6 +473,8 @@ redis, varnish, memcached, DAX (AWS DDB Cache)
 #### Puppet
 
 #### Chef
+
+#### PowerShell DSC
 
 ### Container Orchestration
 
@@ -467,6 +560,8 @@ redis, varnish, memcached, DAX (AWS DDB Cache)
 
 #### Papertrail
 
+#### Sysdig
+
 ### Chaos Testing
 
 - [Principals of Chaos Engineering](http://principlesofchaos.org/?lang=ENcontent)
@@ -502,5 +597,8 @@ redis, varnish, memcached, DAX (AWS DDB Cache)
 
 - [System Design Primer](https://github.com/donnemartin/system-design-primer)
 - [Asynchronism](https://www.lecloud.net/post/9699762917/scalability-for-dummies-part-4-asynchronism)
+- [Introduction to Zookeeper](https://www.slideshare.net/sauravhaloi/introduction-to-apache-zookeeper)
+- [Building Microservices](https://cloudncode.blog/2016/07/22/msa-getting-started/)
+- [re:Invent Scaling up to first 10 million users](https://www.youtube.com/watch?v=w95murBkYmU)
 
 ### Management and Monitoring
