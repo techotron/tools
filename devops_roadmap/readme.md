@@ -168,6 +168,8 @@ Links to resources based on [this roadmap](https://roadmap.sh/devops)
 
 ### Startup Management
 
+- [Managing Linux Init/startup scripts](http://www.debianadmin.com/manage-linux-init-or-startup-scripts.html)
+
 ### Service Management
 
 ### I/O Management
