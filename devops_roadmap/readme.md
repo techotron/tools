@@ -278,11 +278,17 @@ strace, dtrace, systemtap, uname, df, history
 
 ### Reverse Proxy
 
+nginx
+
 ### Caching Server
+
+redis, varnish
 
 ### Forward Proxy
 
 ### Load Balancer
+
+nginx, haproxy
 
 ### Firewall
 
