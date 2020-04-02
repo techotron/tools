@@ -236,6 +236,10 @@ awk, sed, grep, sort, uniq, cat, cut, echo, fmt, tr, nl, egrep, fgrep, wc, jq
 
 ps, top, htop, atop, lsof
 
+- htop
+
+Example: ![htop](./imgs/htop.png)
+
 #### Network
 
 nmap, tcpdump, ping, mtr, traceroute, dig, airmon, airodump, dig, iptables, netstat
