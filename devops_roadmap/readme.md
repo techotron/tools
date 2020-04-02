@@ -51,6 +51,11 @@ A fair bit on content for this has been sourced from [system-design-primer](http
     + [Network](#network)
     + [Others](#others)
 - [Networking, Security and Protocols](#networking--security-and-protocols)
+  * [Core Fundamentals](#core-fundamentals)
+    + [Transmission Control Protocol (TCP)](#transmission-control-protocol--tcp-)
+      - [3-way Handshake](#3-way-handshake)
+    + [Transport Layer Security (TLS)](#transport-layer-security--tls-)
+    + [Remote Procedure Call (RPC)](#remote-procedure-call--rpc-)
   * [Emails](#emails)
     + [SMTP](#smtp)
     + [IMAPS](#imaps)
@@ -70,6 +75,7 @@ A fair bit on content for this has been sourced from [system-design-primer](http
     + [Nginx](#nginx)
     + [HAProxy](#haproxy)
   * [Caching Server](#caching-server)
+    + [Overview](#overview)
     + [Redis](#redis)
     + [Varnish](#varnish)
     + [Memcached](#memcached)
@@ -81,12 +87,15 @@ A fair bit on content for this has been sourced from [system-design-primer](http
     + [HAProxy](#haproxy-1)
   * [Firewall](#firewall)
   * [Queuing and Streaming Systems](#queuing-and-streaming-systems)
+    + [Overview](#overview-1)
     + [Pub/Sub Model](#pub-sub-model)
     + [Producer/Consumer Model](#producer-consumer-model)
     + [Kafka](#kafka)
+    + [Redis](#redis-1)
     + [RabbitMQ](#rabbitmq)
     + [ActiveMQ](#activemq)
     + [Kinesis (AWS)](#kinesis--aws-)
+    + [SQS (AWS)](#sqs--aws-)
   * [Web Server](#web-server)
     + [IIS](#iis)
     + [Nginx](#nginx-2)
@@ -289,6 +298,35 @@ strace, dtrace, systemtap, uname, df, history
 
 ## Networking, Security and Protocols
 
+### Core Fundamentals
+
+#### Transmission Control Protocol (TCP)
+
+Connection-oriented protocol over an IP network. Packets are guaranteed to reach the destination, in the original order using:
+
+- Sequence numbers and checksum fields.
+- Acknowledgement packets and automatic retransmission.
+
+TCP also implements flow control and congestion control.
+
+Web servers can achieve high throughput by keeping a large number of TCP connections open, at the cost of high memory usage. Connection pooling can help ease this, although this is out of scope for a section on TCP. Using UDP will also reduce the overhead that comes with TCP
+
+##### 3-way Handshake
+
+1. Client sends `SYN` to server
+1. Server responds with `SYN-ACK`
+1. Client responds with `ACK`
+
+**Connection Established**
+
+#### Transport Layer Security (TLS)
+
+- [TLS Handshake](https://hpbn.co/transport-layer-security-tls/)
+
+#### Remote Procedure Call (RPC)
+
+- [Brief Overview](https://github.com/donnemartin/system-design-primer#remote-procedure-call-rpc)
+
 ### Emails
 
 #### SMTP
@@ -304,6 +342,20 @@ strace, dtrace, systemtap, uname, df, history
 #### Domain Keys
 
 ### HTTP
+
+- [Brief Overview](https://github.com/donnemartin/system-design-primer#hypertext-transfer-protocol-http)
+
+HTTP is a protocol for transferring data from client to server (request/response). It operates on layer 7 of the OSI model. Typical HTTP verbs include:
+
+||Verb||Description||Idempotent||Safe||Cacheable||
+|---|---|---|---|---|
+|GET|Read a resource|Yes|Yes|Yes|
+|POST|Creates a resource or trigger a process that handles data|No|No|Yes if response contains freshness info|
+|PUT|Creates or replaces a resource|Yes|No|No|
+|PATCH|Partially updates a resource|No|No|Yes if response contains freshness info|
+|DELETE|Deletes a resource|Yes|No|No|
+
+[Source](https://github.com/donnemartin/system-design-primer#hypertext-transfer-protocol-http)
 
 ### HTTPS
 
@@ -342,7 +394,20 @@ Benefits include:
 
 ### Caching Server
 
+#### Overview
+
 - [Brief Caching Intro](https://www.lecloud.net/post/9246290032/scalability-for-dummies-part-3-cache)
+- [Overview of different types of caches](https://github.com/donnemartin/system-design-primer#cache)
+
+**Cache-aside:** (also known as lazy loading) is when a cache is populated after a cache miss has occurred. 
+
+**Eager loading:** is the opposite of lazy loading, where a process populates a cache proactively (eg when the content has been updated on the source server).
+
+**Write-through:** is when the application uses the cache as the main data store. Data is read/written to the cache while the cache server is responsible for reading/writing to the backend database.
+
+**Write-behind (write-back):** is similar to write-through except with an async process between the cache and database layers. The cache writes an event to a queue -> which is processed by an event processor -> which writes to a DB
+
+**Refresh-ahead:** when the cache automatically refreshes content which is about to expire. Success depends on the accuracy of the prediction of items likely to be needed in the future.
 
 #### Redis
 
@@ -384,19 +449,38 @@ Layer 4 LBs are more performant, at the cost of flexibility, compared with layer
 
 ### Queuing and Streaming Systems
 
+#### Overview
+
+- [Asynchronism](https://www.lecloud.net/post/9699762917/scalability-for-dummies-part-4-asynchronism)
+- [Brief Overview](https://github.com/donnemartin/system-design-primer#asynchronism)
+- [Back Pressure](https://mechanical-sympathy.blogspot.com/2012/05/apply-back-pressure-when-overloaded.html)
+- [Exponential Backoff](https://docs.aws.amazon.com/general/latest/gr/api-retries.html)
+
+Back pressure is a way of managing queues and QoS for the end user. You can limit the queue size and respond to the request with a meaningful message, rather than exhausting resources for existing connections. Not doing this can create compounded problems such as an increase in cache misses (due to the processing server not being able to process the request). Typically, this is fed back to the user with a 503 (service unavailable) status code.
+
+You can introduce a retry mechanism without causing more problems with exponetial backoff
+
 #### Pub/Sub Model
 
 #### Producer/Consumer Model
 
 #### Kafka
 
-#### RabbitMQ
+#### Redis
 
-#### ActiveMQ
+Redis can be used as a simple message queue, as well has being a data store.
+
+- [Pub/Sub Redis](https://redis.io/topics/pubsub)
+
+#### RabbitMQ
 
 - [Getting Starting Guides](https://www.rabbitmq.com/getstarted.html)
 
+#### ActiveMQ
+
 #### Kinesis (AWS)
+
+#### SQS (AWS)
 
 ### Web Server
 
@@ -596,7 +680,6 @@ Layer 4 LBs are more performant, at the cost of flexibility, compared with layer
 ### Design and Implementation
 
 - [System Design Primer](https://github.com/donnemartin/system-design-primer)
-- [Asynchronism](https://www.lecloud.net/post/9699762917/scalability-for-dummies-part-4-asynchronism)
 - [Introduction to Zookeeper](https://www.slideshare.net/sauravhaloi/introduction-to-apache-zookeeper)
 - [Building Microservices](https://cloudncode.blog/2016/07/22/msa-getting-started/)
 - [re:Invent Scaling up to first 10 million users](https://www.youtube.com/watch?v=w95murBkYmU)
