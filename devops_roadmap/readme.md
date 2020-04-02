@@ -293,13 +293,25 @@ nginx
 
 ### Caching Server
 
-redis, varnish, memcached
+redis, varnish, memcached, DAX (AWS DDB Cache)
+
+- [Brief Caching Intro](https://www.lecloud.net/post/9246290032/scalability-for-dummies-part-3-cache)
 
 ### Forward Proxy
 
 ### Load Balancer
 
-nginx, haproxy
+#### Concepts
+
+- [Layer 4 LB](https://github.com/donnemartin/system-design-primer#layer-4-load-balancing)
+
+  > Checks the IP source/destination and port headers in the packet, performing NAT
+
+- [Layer 7 LB]()
+
+#### Nginx
+
+#### HAProxy
 
 ### Firewall
 
@@ -331,6 +343,26 @@ nginx, haproxy
 
 #### Caddy
 
+### Database Server
+
+#### SQL (Relational)
+
+##### MSSQL
+
+##### MariaDB
+
+##### PostgreSQL
+
+#### NoSQL
+
+##### MongoDB
+
+##### CouchDB
+
+#### Key/Value
+
+##### Ectd
+
 ## Learn Infrastructure as Code
 
 ### Containers
@@ -338,6 +370,8 @@ nginx, haproxy
 #### Docker
 
 #### LXC
+
+#### Packer (Image Building)
 
 ### Configuration Management
 
@@ -459,8 +493,14 @@ nginx, haproxy
 
 ### Data Management
 
+#### CDNs
+
+- [Push CDNs](https://github.com/donnemartin/system-design-primer#push-cdns)
+- [Pull CDNs](https://github.com/donnemartin/system-design-primer#pull-cdns)
+
 ### Design and Implementation
 
 - [System Design Primer](https://github.com/donnemartin/system-design-primer)
+- [Asynchronism](https://www.lecloud.net/post/9699762917/scalability-for-dummies-part-4-asynchronism)
 
 ### Management and Monitoring
