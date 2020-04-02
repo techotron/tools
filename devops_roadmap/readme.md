@@ -68,6 +68,13 @@ Links to resources based on [this roadmap](https://roadmap.sh/devops)
   * [Forward Proxy](#forward-proxy)
   * [Load Balancer](#load-balancer)
   * [Firewall](#firewall)
+  * [Queuing and Streaming Systems](#queuing-and-streaming-systems)
+    + [Pub/Sub Model](#pub-sub-model)
+    + [Producer/Consumer Model](#producer-consumer-model)
+    + [Kafka](#kafka)
+    + [RabbitMQ](#rabbitmq)
+    + [ActiveMQ](#activemq)
+    + [Kinesis (AWS)](#kinesis--aws-)
   * [Web Server](#web-server)
     + [IIS](#iis)
     + [Nginx](#nginx)
@@ -295,6 +302,22 @@ redis, varnish, memcached
 nginx, haproxy
 
 ### Firewall
+
+### Queuing and Streaming Systems
+
+#### Pub/Sub Model
+
+#### Producer/Consumer Model
+
+#### Kafka
+
+#### RabbitMQ
+
+#### ActiveMQ
+
+- [Getting Starting Guides](https://www.rabbitmq.com/getstarted.html)
+
+#### Kinesis (AWS)
 
 ### Web Server
 
