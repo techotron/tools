@@ -125,6 +125,7 @@ Links to resources based on [this roadmap](https://roadmap.sh/devops)
     + [Graylog](#graylog)
     + [Splunk](#splunk)
     + [Papertrail](#papertrail)
+  * [Chaos Testing](#chaos-testing)
 - [Cloud Providers](#cloud-providers)
   * [AWS](#aws)
   * [Google Cloud](#google-cloud)
@@ -140,7 +141,6 @@ Links to resources based on [this roadmap](https://roadmap.sh/devops)
   * [Management and Monitoring](#management-and-monitoring)
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
-
 
 ## Learn a programming language
 
@@ -168,7 +168,7 @@ Links to resources based on [this roadmap](https://roadmap.sh/devops)
 
 ### Startup Management
 
-- [Managing Linux Init/startup scripts](http://www.debianadmin.com/manage-linux-init-or-startup-scripts.html)
+[] - [Managing Linux Init/startup scripts](http://www.debianadmin.com/manage-linux-init-or-startup-scripts.html)
 
 ### Service Management
 
@@ -397,6 +397,10 @@ strace, dtrace, systemtap, uname, df, history
 #### Splunk
 
 #### Papertrail
+
+### Chaos Testing
+
+[] - [Principals of Chaos Engineering](http://principlesofchaos.org/?lang=ENcontent)
 
 ## Cloud Providers
 
