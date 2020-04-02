@@ -274,6 +274,8 @@ strace, dtrace, systemtap, uname, df, history
 
 ## What is and How to Setup a...
 
+- [Harvard lecture which serves as a good intro](https://www.youtube.com/watch?v=-W9F__D3oY4)
+
 ### Reverse Proxy
 
 ### Caching Server
