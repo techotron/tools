@@ -351,6 +351,14 @@ Popular RPC frameworks include:
 - [Thrift](https://thrift.apache.org/)
 - [Avro](https://avro.apache.org/docs/current/)
 
+**Some advantages for using RPC:**
+
+1. Size. Protocol buffers are compressed on the wire and they are a binary protocol, as opposed to REST which is usually a text protocol.
+1. Enforcing typing. The client is able to validate that what it’s sending is reasonable, which saves time on the wire and makes code testable at compile time.
+1. Standardization. Both server and client import the protobuf library/header/resource/package and the specific relevant definitions. So both sides are able to manipulate them directly as objects and barely need to do any parsing at all.
+1. Definition is in code. Instead of a client and server just sort of randomly adding fields. You can’t do that in a protobuf because there’s a specification.
+1. Backward compatibility. If you send a new field that an old library doesn’t know, it will just ignore it. (This is sort of like GraphQL)
+
 #### Representational State Transfer (REST)
 
 - [Brief Overview](https://github.com/donnemartin/system-design-primer#representational-state-transfer-rest)
