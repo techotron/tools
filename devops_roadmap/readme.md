@@ -56,6 +56,7 @@ A fair bit on content for this has been sourced from [system-design-primer](http
       - [3-way Handshake](#3-way-handshake)
     + [Transport Layer Security (TLS)](#transport-layer-security--tls-)
     + [Remote Procedure Call (RPC)](#remote-procedure-call--rpc-)
+    + [Representational State Transfer (REST)](#representational-state-transfer--rest-)
   * [Emails](#emails)
     + [SMTP](#smtp)
     + [IMAPS](#imaps)
@@ -64,6 +65,7 @@ A fair bit on content for this has been sourced from [system-design-primer](http
     + [SPF](#spf)
     + [Domain Keys](#domain-keys)
   * [HTTP](#http)
+    + [Security](#security)
   * [HTTPS](#https)
   * [FTP](#ftp)
   * [SSL/TLS](#ssl-tls)
@@ -276,6 +278,14 @@ gcc, make
 
 nmon, iostat, sar, vmstat
 
+**Latency Comparison Numbers**
+
+![Latency Comparison Numbers](./imgs/latency-comparison-numbers.png)
+
+**Latency Comparison Visualisation**
+
+![Latency Comparison Visualisation](./imgs/latency-comparison-visualisation.png)
+
 #### Text Manipulation Tools
 
 awk, sed, grep, sort, uniq, cat, cut, echo, fmt, tr, nl, egrep, fgrep, wc, jq
@@ -290,7 +300,7 @@ Example: ![htop](./imgs/htop.png)
 
 #### Network
 
-nmap, tcpdump, ping, mtr, traceroute, dig, airmon, airodump, dig, iptables, netstat
+nmap, tcpdump, ping, mtr, traceroute, dig, airmon, airodump, dig, iptables, netstat, netcat
 
 #### Others
 
@@ -327,6 +337,26 @@ Web servers can achieve high throughput by keeping a large number of TCP connect
 
 - [Brief Overview](https://github.com/donnemartin/system-design-primer#remote-procedure-call-rpc)
 
+Allows a client to remotely cause a procedure to execute on a different address space. The procedure is coded as if it were a local call, which abstracts the client/server communication details that are needed. 
+
+Client program calls the client stub procedure.
+Client stub procedure marshalls (packs) the procedure ID and argments into a request message and passes to Communication module
+Communication module of client, sends to Communication module of the server
+Server stub procedure unmarshalls the request
+Server program executes procedure
+
+Popular RPC frameworks include:
+
+- [Protobuf](https://developers.google.com/protocol-buffers/)
+- [Thrift](https://thrift.apache.org/)
+- [Avro](https://avro.apache.org/docs/current/)
+
+#### Representational State Transfer (REST)
+
+- [Brief Overview](https://github.com/donnemartin/system-design-primer#representational-state-transfer-rest)
+
+REST is an architectural style, enforcing a client/server model. The client acts on a set of resources managed by the server. The server provides a representation of resources that can either manipulate or get a new representation of resources. All communications must be stateless and cacheable.
+
 ### Emails
 
 #### SMTP
@@ -357,7 +387,15 @@ HTTP is a protocol for transferring data from client to server (request/response
 
 [Source](https://github.com/donnemartin/system-design-primer#hypertext-transfer-protocol-http)
 
+#### Security
+
+- [Security Checklist](https://github.com/FallibleInc/security-guide-for-developers/blob/master/security-checklist.md)
+- [What can go wrong](https://github.com/FallibleInc/security-guide-for-developers/blob/master/what-can-go-wrong.md)
+- [OWASP Top 10](https://owasp.org/www-project-top-ten/)
+
 ### HTTPS
+
+- [Detailed Overview](https://github.com/FallibleInc/security-guide-for-developers/blob/master/https.md)
 
 ### FTP
 
