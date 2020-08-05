@@ -153,6 +153,12 @@ Todo
 ## tc (Traffic Control)
 The following commands use `tc` and `netem` to simulate network issues on the host
 
+### Generic commands
+- Show list of rules currently applied: `sudo tc qdisc show`
+- Add rule: `sudo tc qdisc add...`
+- Change rule: `sudo tc qdisc change...`
+- Delete rule: `sudo tc qdisc del...`
+
 ### Add/remove delay onto the "eno1" interface
 ```bash
 sudo tc qdisc add dev eno1 root netem delay 1000ms
