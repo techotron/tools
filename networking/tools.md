@@ -1,9 +1,7 @@
 # General Networking Tools
-
 This is an area for notes about general networking tools and utilities, with quick notes and example commands
 
 ## Basic Network Commands
-
 - Standard network interface details: `ip addr show` and `ifconfig` (obsolete)
 - Network Manager Cli: `nmcli` - shows DNS details and default route. `nmcli device show` will provide more comprehensive list 
   - List IPv4 IP address and gateway: `nmcli device show | grep 172 | egrep '^IP4.G|^IP4.A'`
@@ -13,13 +11,11 @@ This is an area for notes about general networking tools and utilities, with qui
 - Force `ping` through specific interface: `ping -I eth1 1.1.1.1`
 
 ## DNS
-
 - Dig (part of the `bind-utils` package for Centos)
   - Show the query/answer of a DNS request: `dig -4 www.linuxacademy.com`
   - Show the query/answer plus trace: `dig -4 www.linuxacademy.com +trace`
   
 ## DHCP
-
 **Note:** commands may vary depending on *nix flavour in use but you can usually tab-complete from `/var/lib/dhc->` to find the right one. 
 
 - DHCP request and offers are layer 2 broadcasts (similar to ARP requests) and need a DHCP client.
@@ -29,12 +25,10 @@ This is an area for notes about general networking tools and utilities, with qui
 - View listening client: `sudo ss -luntp | grep dhclient` (switches: "listening", "udp", "numeric (don't resolve)", "tcp", "processes")
 
 ### Release IP address
-
 - Release IPL `sudo dhclient -r`
 - Restart DHCP Client: `sudo dhclient`
 
 ## Setting Static IP
-
 - Check connection number using `nmcli`
 - Run `sudo nmcli connection modify System\ ens5 ipv4.method manual ipv4.address <NEW_IP/CIDR> ipv4.gateway <GW_IP>>`. This won't change anything, need to restart the interface
 - Bring interface down and up: `sudo nmcli connection down System\ ens5` and `sudo nmcli connection up System\ ens5` (can also use `systemctl restart network`)
@@ -42,12 +36,10 @@ This is an area for notes about general networking tools and utilities, with qui
 - Change it back to DHCP: `sudo nmcli connection modify System\ ens5 ipv4.method auto ipv4.address "" ipv4.dns "" ipv4.gateway ""` (followed by interface restart as above)
 
 ### Adding additional IPs
-
 - `sudo nmcli connection modify System\ ens5 ipv4.address <IP_ADD/CIDR>, <IP_ADD/CIDR>`. This will add 2 new IPs. They will rely upon GW/DNS settings from previous settings (whether it be DHCP or manual) in order to work. Assuming these settings are all correct, the new IPs will be pingable.
 - Bring interface down and up: `sudo nmcli connection down System\ ens5` and `sudo nmcli connection up System\ ens5`
 
 ## Bonding
-
 Assuming you have 2 cards setup already. 
 
 - Create bond: `sudo nmcli connection add type bond con-name bond0 ifname bond0 mode active-backup ip4 <NEW_IP_ADD/CIDR`
@@ -59,7 +51,6 @@ Assuming you have 2 cards setup already.
 - Restart the bond interface: `sudo nmcli connection down bond0 && sudo nmcli connection up bond0`
 
 ## Teaming
-
 - Need to use `teamd` so install: `yum install -y teamd bash-completion` and reload profile to enable `bash-completion`
 - View network connections: `nmcli c`
 - If you want to delete the connections to the interfaces using NetworkManager: `sudo nmcli connection delete Name\ of\ connection\ 1`
@@ -73,7 +64,6 @@ Assuming you have 2 cards setup already.
 - If we wanted to use round robin runner, create the team interface in the same way but don't specify a team.config. Round robin is the default. Confirm this using the above `teamdctl` command. 
 
 ## Routing
-
 - Show routing table: `ip r`. You can also use `nmcli` and check the listed routes there.
 - Flush routing table: `ip route flush 123.123.123.123` or `ip r f 123.123.123.123`
 - Prohibit traffic to IP: `ip route add prohibit 1.1.1.1`. This will result in a ping failing with: 
@@ -105,7 +95,6 @@ Curl result:
 - Create route for network: `ip route add 10.0.8.0/24 via <GW_IP>`
 
 ## Local Name Resolution
-
 - Name Service Switch file: `/etc/nsswitch.conf`. This is used by `getent`, eg: `getent ahosts latoys.com`
 - Check the ordering by the "hosts" field in the .conf file. By default, this is `files dns myhostname`. However, if you used one of the tools in the "bind-utils" package (eg `host latoys.com`), you'd find that it would use DNS and ignore the value of /etc/hosts.
 - Use a public DNS server to resolve a host: Google: `dig @8.8.8.8 <HOSTNAME>` Cloud Flare: `dig @1.1.1.1 <HOSTNAME>`
@@ -159,3 +148,41 @@ ns1.memset.com.         1800    IN      A       89.200.136.74
 - When we see `NXDOMAIN` in the "status:" section of a dig response, this means the domain does not exist.
 
 ## Firewalls
+Todo
+
+## tc (Traffic Control)
+The following commands use `tc` and `netem` to simulate network issues on the host
+
+### Add/remove delay onto the "eno1" interface
+```bash
+sudo tc qdisc add dev eno1 root netem delay 1000ms
+sudo tc qdisc del dev eno1 root netem delay 1000ms
+```
+
+**Note:** If a rule already exists, then s/add/change
+
+### Add 100ms +/- 10ms network delay variation
+```bash
+sudo tc qdisc del dev eno1 root netem delay 100ms 10ms
+sudo tc qdisc del dev eno1 root netem delay 100ms 10ms 25%
+```
+
+The second command adds a correlation which makes the variation a bit more random
+
+### Use a delay distribution table
+A network delay is typically less uniform than the above examples so you can use a distribution table to describe the delay.
+```bash
+sudo tc qdisc change dev eno1 root netem delay 100ms 1000ms distribution normal
+```
+
+The tables you can use reside in /usr/lib/tc
+They are compiled by iproute2. It's possible to create your own based on experimental data and use that.
+
+### Packet loss
+```bash
+sudo tc qdisc add dev eno1 root netem loss 0.5%
+sudo tc qdisc add dev eno1 root netem loss 0.5% 25%
+```
+
+Same as before, the second command here adds a correlation to make it more random
+
