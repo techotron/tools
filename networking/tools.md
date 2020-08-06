@@ -192,3 +192,13 @@ sudo tc qdisc add dev eno1 root netem loss 0.5% 25%
 
 Same as before, the second command here adds a correlation to make it more random
 
+## LSOF
+List open ports on the host 
+```bash
+lsof -n -a -i4 -a -P
+```
+
+- `-n`: Don't resolve IPs to hostnames (faster)
+- `-a`: AND the options
+- `-i4`: Match IPv4 addresses
+- `-P`: Don't resolve port numbers to network files (faster)
