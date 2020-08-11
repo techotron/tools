@@ -6,7 +6,7 @@
 # 1. Create new sec group (if not already exists)
 # 2. Create keypair and export name of key as SANDBOX_PRIVATE_KEY
 # 3. Create new instance in region
-# 4. Log onto instance using key (needs to be saved as SANDBOX_PRIVATE_KEY.pem)
+# 4. Log onto instance using key (needs to be saved as SANDBOX_PRIVATE_KEY_regionname.pem)
 # 5. Delete instance when finished
 
 function get-latest-ami() {
@@ -14,15 +14,15 @@ function get-latest-ami() {
 }
 
 function create-new-ssh-sec-group() {
-  aws ec2 create-security-group --group-name eddys-allow-ssh --description "Allow SSH from my IP" --region $1
+  aws ec2 create-security-group --group-name eddys-allow-ssh --vpc-id $(get-vpc $1) --description "Allow SSH from my IP" --region $1
 }
 
 function get-sec-group-id() {
-  aws ec2 describe-security-groups --group-name eddys-allow-ssh --region $1 --query 'SecurityGroups[].GroupId' --output text
+  aws ec2 describe-security-groups --filter Name=vpc-id,Values=$(get-vpc $1) Name=group-name,Values=eddys-allow-ssh --region $1 --query 'SecurityGroups[].GroupId' --output text
 }
 
 function create-new-instance() {
-  aws ec2 run-instances --image-id $(get-latest-ami $1) --count 1 --instance-type t2.micro --key-name $SANDBOX_PRIVATE_KEY --security-group-ids $(get-sec-group-id $1) --subnet-id $(get-subnet-id $1) --region $1 --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=eddy-temp-instance}]'
+  aws ec2 run-instances --image-id $(get-latest-ami $1) --count 1 --instance-type t2.micro --key-name "$SANDBOX_PRIVATE_KEY"_$1 --security-group-ids $(get-sec-group-id $1) --subnet-id $(get-subnet-id $1) --region $1 --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=eddy-temp-instance}]'
 }
 
 function get-subnet-id() {
@@ -38,7 +38,7 @@ function get-temp-instance-ip() {
 }
 
 function logon-temp-instance() {
-  ssh -i ~/.ssh/$SANDBOX_PRIVATE_KEY.pem ec2-user@$(get-temp-instance-ip $1)
+  ssh -i ~/.ssh/"$SANDBOX_PRIVATE_KEY"_$1.pem ec2-user@$(get-temp-instance-ip $1)
 }
 
 function delete-temp-instance() {
