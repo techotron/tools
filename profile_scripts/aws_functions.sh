@@ -30,11 +30,11 @@ function get-subnet-id() {
 }
 
 function get-temp-instance-id() {
-  aws ec2 describe-instances --region $1 --query 'Reservations[].Instances[?Tags[?Key==`Name`]|[?Value==`eddy-temp-instance`]].InstanceId' --output text
+  aws ec2 describe-instances --region $1 --filter Name=instance-state-name,Values=running --query 'Reservations[].Instances[?Tags[?Key==`Name`]|[?Value==`eddy-temp-instance`]].InstanceId' --output text
 }
 
 function get-temp-instance-ip() {
-  aws ec2 describe-instances --region $1 --instance-ids $(get-temp-instance-id $1) --query 'Reservations[].Instances[].PublicIpAddress' --output text
+  aws ec2 describe-instances --region $1 --instance-ids $(get-temp-instance-id $1) --query 'Reservations[].Instances[].PrivateIpAddress' --output text
 }
 
 function logon-temp-instance() {
