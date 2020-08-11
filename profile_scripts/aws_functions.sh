@@ -22,7 +22,7 @@ function get-sec-group-id() {
 }
 
 function create-new-instance() {
-  aws ec2 run-instances --image-id $(get-latest-ami $1) --count 1 --instance-type t2.micro --key-name "$SANDBOX_PRIVATE_KEY"_$1 --security-group-ids $(get-sec-group-id $1) --subnet-id $(get-subnet-id $1) --region $1 --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=eddy-temp-instance}]'
+  aws ec2 run-instances --image-id $(get-latest-ami $1) --count 1 --instance-type t2.micro --key-name "$SANDBOX_PRIVATE_KEY"_$1 --security-group-ids $(get-sec-group-id $1) --subnet-id $(get-subnet-id $1) --region $1 --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=eddy-temp-instance}]' --associate-public-ip-address
 }
 
 function get-subnet-id() {
@@ -34,7 +34,7 @@ function get-temp-instance-id() {
 }
 
 function get-temp-instance-ip() {
-  aws ec2 describe-instances --region $1 --instance-ids $(get-temp-instance-id $1) --query 'Reservations[].Instances[].PrivateIpAddress' --output text
+  aws ec2 describe-instances --region $1 --instance-ids $(get-temp-instance-id $1) --query 'Reservations[].Instances[].PublicIpAddress' --output text
 }
 
 function logon-temp-instance() {
