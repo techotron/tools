@@ -26,7 +26,7 @@ function create-new-instance() {
 }
 
 function get-subnet-id() {
-  aws ec2 describe-subnets --region $1 --filter Name=vpc-id,Values=$(get-vpc $1) --query 'Subnets[0].SubnetId' --output text
+  aws ec2 describe-subnets --region $1 --filter Name=vpc-id,Values=$(get-vpc $1) Name=tag:type,Values=pub --query 'Subnets[0].SubnetId' --output text
 }
 
 function get-temp-instance-id() {
