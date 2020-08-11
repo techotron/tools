@@ -26,7 +26,7 @@ function create-new-instance() {
 }
 
 function get-subnet-id() {
-  aws ec2 describe-subnets --region $1 --query 'Subnets[0].SubnetId' --output text
+  aws ec2 describe-subnets --region $1 --filter Name=vpc-id,Values=$(get-vpc $1) --query 'Subnets[0].SubnetId' --output text
 }
 
 function get-temp-instance-id() {
@@ -47,4 +47,8 @@ function delete-temp-instance() {
 
 function add-local-ip-to-sec-group() {
   aws ec2 authorize-security-group-ingress --group-id $(get-sec-group-id $1) --protocol tcp --port 22 --cidr $(curl -s https://checkip.amazonaws.com)/32 --region $1
+}
+
+function get-vpc() {
+  aws ec2 describe-vpcs --region $1 --filter Name=tag:Name,Values=sandbox_dev --query 'Vpcs[0].VpcId' --output text
 }
