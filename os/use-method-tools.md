@@ -145,6 +145,41 @@ The active and passive counts are a rough indication of server load. Passive ~ne
 
 Retransmits are a sign of network or server issue. Could be unrelieable network or overloaded server dropping packets.
 
+### sar -n SOCK
+List stats relating to sockets on the host
+
+```bash
+08:55:13 AM       LINUX RESTART
+
+09:00:01 AM    totsck    tcpsck    udpsck    rawsck   ip-frag    tcp-tw
+09:10:01 AM       261         9         4         0         0         0
+09:20:01 AM       262         9         4         0         0         1
+09:30:01 AM       259         7         4         0         0         0
+09:40:01 AM       260         7         4         0         0         2
+09:50:01 AM       260         7         4         0         0         2
+10:00:01 AM       269        14         5         0         0     16141
+10:10:01 AM       271        14         5         0         0     16156
+10:20:01 AM       271        13         4         0         0     15585
+10:30:01 AM       262         9         4         0         0     15842
+10:40:01 AM       274        14         4         0         0     16108
+10:50:01 AM       265         8         4         0         0      9065
+11:00:01 AM       265         8         4         0         0         0
+11:10:01 AM       265         8         4         0         0         0
+11:20:01 AM       270        10         4         0         0         0
+11:30:01 AM       270        10         4         0         0         0
+11:40:01 AM       299        26         4         0         0     15646
+11:50:01 AM       295        22         4         0         0     14960
+12:00:01 PM       281        13         5         0         0     15800
+12:10:01 PM       284        15         5         0         0     16384
+12:20:01 PM       285        16         5         0         0     15817
+12:30:01 PM       267         8         4         0         0         0
+12:40:01 PM       272        10         4         0         0         0
+Average:          271        12         4         0         0      7614
+```
+
+### ss -n -o state time-wait
+`ss -n -o state time-wait` will list the number of connections in a TIME_WAIT state. This can be useful if there is a build up of connections in a TIME_WAIT state. Use with `| wc -l` to get a count of the connections (although this information can already be seen with `sar -n SOCK`)
+
 ### top
 
 `top` - useful as an overview of the previously mentioned command. If values look different from the previous commands - then might be an indication that load is variable. Ctrl-S to pause and Ctrl-Q to continue.
