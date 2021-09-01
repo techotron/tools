@@ -180,6 +180,10 @@ Average:          271        12         4         0         0      7614
 ### ss -n -o state time-wait
 `ss -n -o state time-wait` will list the number of connections in a TIME_WAIT state. This can be useful if there is a build up of connections in a TIME_WAIT state. Use with `| wc -l` to get a count of the connections (although this information can already be seen with `sar -n SOCK`)
 
+The following `ss` command will list the unique quadruplets (sport, saddress, dport, daddress). This can be helpful to confirm if the number of TIME_WAIT connections marries up with the limitations of the TCP configuration
+
+`ss -o state time-wait -tan 'dport = :80' | awk '{print $(NF-1)" "$(NF-2)}' | sed 's/:[^ ]*//g' | sort | uniq -c`
+
 ### top
 
 `top` - useful as an overview of the previously mentioned command. If values look different from the previous commands - then might be an indication that load is variable. Ctrl-S to pause and Ctrl-Q to continue.
