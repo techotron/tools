@@ -400,8 +400,12 @@ nmap
 tcpdump
 
 #### Sockets
-TODO ======================================================================================================
-nc (netcat) to create an ad-hoc listener
+Netcat (`nc`) can be used to run port scans and listen on ports to check for connectivity
+- Port scan: `nc -z -v sre-resources.esnow.uk 443`
+- Listen on specified port: `nc -l -p 5000`
+- Ad-hoc web server: `printf ‘HTTP/1.1 200 OK\n\n%s’ “$(cat index.html)” | netcat -l -k -p 8080`
+- Transfer a file (this will send the contents of a file to the specified host/port): `nc HOSTNAME PORT < file.log`
+**Note:** File transfer can be used for sending log files to logstash on the fly, without using a log agent.
 
 ---
 
@@ -421,6 +425,8 @@ nc (netcat) to create an ad-hoc listener
 - To create a route out through a specific interface: `ip route add 1.1.1.1 via <GW_IP> dev eth0`
 - Create a route out through a specific gateway: `ip route add 1.1.1.1 via <GW_IP>`
 - Create route for network: `ip route add 10.0.8.0/24 via <GW_IP>`
+- Check network connection between the host. This prints network stats of the intervening routers to the hostname: `mtr HOSTNAME`
+- Alternative to traceroute: `tracepath HOSTNAME`. 
 
 #### DHCP
 **Note:** commands may vary depending on *nix flavour in use but you can usually tab-complete from `/var/lib/dhc->` to find the right one. 
@@ -441,6 +447,7 @@ nc (netcat) to create an ad-hoc listener
   - `dig sre-resources.esnow.uk`: return a query on the host
   - `dig @8.8.8.8 sre-resources.esnow.uk`: send query to specified nameserver
   - `dig +short sre-resources.esnow.uk`: only return the IP of the specified host
+  - `dig -x 12.34.56.78`: reverse DNS lookup
 
 - Flush DNS cache: 
   - The OS will store a couple of caches, client will refer to one cache, local DNS resolver will refer to it's own cache. 
