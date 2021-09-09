@@ -199,6 +199,6 @@ lsof -n -a -i4 -a -P
 ```
 
 - `-n`: Don't resolve IPs to hostnames (faster)
-- `-a`: AND the options
+- `-a`: AND operator
 - `-i4`: Match IPv4 addresses
 - `-P`: Don't resolve port numbers to network files (faster)
