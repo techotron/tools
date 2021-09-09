@@ -116,6 +116,11 @@ aws iam list-roles | jq '.Roles[] | select(.RoleName == "my-role-name" or .RoleN
 ```bash
 cat event_history.json | jq '.Records[] | select(.eventName | contains("DeleteQueue")) | select(.requestParameters.queueUrl | contains("some-queue-name"))'
 ```
+- Change a key called "schema_version" in a JSON file, replace with a value gathered from another command (`cut` is getting characters 1 to 3 in the filename here) and save back to the original file:
+```bash
+jq ".schema_version = \"$(ls ./files_with_numbers | tail -n 1 | cut -c 1-3)\"" myConfig.json > myConfig_temp.json
+mv myConfig_temp.json myConfig.json
+```
 
 #### Misc
 **`watch`**
