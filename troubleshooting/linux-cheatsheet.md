@@ -94,6 +94,7 @@ F3D3A4C199E2
 - Print all columns: `awk '{print $0}' /var/log/file.log`
 - Print all but the first column: `awk '{$1=""; print $0}' /var/log/file.log`
 - Print all but the first 2 columns: `awk '{$1=$2=""; print $0}' /var/log/file.log`
+- Print first and second column with `_` as a delimiter: `awk -F "_" '{print $1, $2}' /var/log/file.log`
 
 #### `jq`
 Format and filter JSON output
@@ -466,3 +467,19 @@ Netcat (`nc`) can be used to run port scans and listen on ports to check for con
 
 
 ### SSH
+TODO ======================================================================================================
+Generate ssh key (private/public):
+```bash
+ssh-keygen -t ed25519 -C "eddy" -f ~/.ssh/private_key_filename
+```
+**Note:** `ed25519` is faster than RSA however, it's more recent so some systems may not support it. An RSA key should be > 3072 bits:
+
+```bash
+ssh-keygen -t rsa -b 4096 -C "eddy" -f ~/.ssh/private_key_filename
+```
+
+#### Session
+TODO ======================================================================================================
+- Standard session: `ssh -i ~/.ssh/private_key user@host`
+- Port forwarding
+- Tunnel
