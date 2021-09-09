@@ -160,20 +160,81 @@ EOF
 - Same as above but any of type "file": `find /var/ -type f -exec grep -i -E "error|warning" '{}' \; -print`
 
 **`curl`**
-TODO ======================================================================================================
-get and post with headers
-output to file 
-download
+- GET request with only response headers: `curl -I https://sre-resources.esnow.uk`
+- POST request with header and data: 
+```bash
+curl -X POST -H "Accept: application/json" -d '{"quoteText":"some text","quotee":"eddy"}' 'http://quotebook.esnow.uk/api/quotes/public/testquotebook'
+```
+- Write output from response to a file: `curl https://quotebook.esnow.uk/api/quotebooks -o file.json`
+- Download a file. Filename will be extracted from the URL: `curl https://example.com/someFileName.txt -O`
+
 **`wget`**
-TODO ======================================================================================================
-download to file
+- Download a file. Filename will be **data.zip** in current working directory: `wget -O https://example.com/data.zip`
+- Download a file in the background: `wget -b -O https://example.com/data.zip`
+- Continue from a failed download: `wget -c https://example.com/filename.tar.gz`
+- Authenticate an HTTP request: `wget --http-user=USERNAME --http-password=PASSWORD http://domain.com/filename.html`
+- Recursive download of a webste to level 3: `wget -r -l3 http://www.example.com/`
+- Run a script directly after downloading it: `wget -O - http://website.com/my-script.sh | bash`
+- Same as above but for interactive scripts: `bash <(wget -qO- http://website.com/my-script.sh)`
 
 ### Security
+#### Permissions
 TODO ======================================================================================================
-permissions
-openssl
-selinux
-iptables
+#### Openssl
+TODO ======================================================================================================
+#### Selinux
+TODO ======================================================================================================
+#### iptables
+Iptables uses 3 different chains, **input**, **forward** and **output**. When a connection tries to establish itself on the system, iptables looks for a rule to match. If no rules match, it resorts to default behaviour. 
+- Input: This is used to control the behaviour of incoming connections.
+- Forward: Used for incoming connections which aren't for this system (eg a router). This chain is used for routing and NATing. 
+- Output: Used for outgoing connections. Rules here will effect connections going out _from_ your system.
+
+**List all Rules**
+- List policies for all chains: `sudo iptables -L`
+- List chains (with network metrics pertaining to each): `sudo iptables -L -v`
+- List rules for only the INPUT chain: `sudo iptables -L INPUT`
+- List rules with line numbers: `sudo iptables -L --line-numbers`
+
+**Default Policies**
+- List **default** policies for all chains: `sudo iptables -L | grep policy`
+- Set default policy for the **FORWARD** chain to accept connections: `sudo iptables --policy FORWARD ACCEPT`
+- Same as above but to deny connections: `sudo iptables --policy FORWARD DROP`
+
+**Responses**
+You can configure iptables to respond in various ways. The 3 most common are: 
+- `accept`: Allow the connection
+- `drop`: Drop the connection as if it never happened (you're not acknowledging that you exist to the source with this response, eg. in a ping command, you'd see something like "Request timed out")
+- `reject`: Don't allow the connection but send an error back. (eg in a ping command, you'd see something like "Reply from x.x.x.x: Destination port unreachable")
+
+**Adding Rules**
+- Block connections from IP: 10.0.0.10: `sudo iptables -A INPUT -s 10.0.0.10 -j DROP`
+- Block connections from subnet: 10.1.0.0/16: `sudo iptables -A INPUT -s 10.1.0.0/16 -j DROP`
+- Block connections to TCP port 80 from 10.0.0.10: `sudo iptables -A INPUT -p tcp --dport http -s 10.0.0.10 -j DROP`
+- Block connections to TCP port 22 from any IP address: `sudo iptables -A INPUT -p tcp --dport 22 -j DROP`
+
+**Removing Rules/Counters**
+- Clear counters for all chains: `sudo iptables -Z` (just the INPUT chain): `sudo iptables -Z INPUT` (these will not survive a reboot)
+- Remove rule 3 in the INPUT chain: `sudo iptables -D INPUT 3`
+- Remove rule which was created with `sudo iptables -A INPUT -m conntrack --ctstate INVALID -j DROP`: 
+```bash
+sudo iptables -D INPUT -m conntrack --ctstate INVALID -j DROP
+```
+- Flush all rules from the INPUT chain: `sudo iptables -F INPUT` (Use with caution as this could lock you out of a session if the default rule is DROP)
+
+
+**Connection State**
+Many connections will require a 2-way connection state, therefore you'd need to allow the return connection flow to the source. Eg, SSH. A client SSHing onto your server will need to see a response in order for the session to get established. You can specify the state a connection must be in your rules.
+- Allow new and established incoming ssh connections and allow established ssh connections out:
+```bash
+iptables -A INPUT -p tcp --dport ssh -s 10.0.0.1 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -p tcp --sport 22 -d 10.0.0.1 -m state --state ESTABLISHED -j ACCEPT
+```
+
+**Saving Rules**
+Iptables rules take effect immediately but in order for the changes to persist a reboot, you'll need to save them. This can differ across the distros:
+- Ubuntu: `sudo /sbin/iptables-save`
+- CentOS: `sudo /sbin/service iptables save` or `sudo /etc/init.d/iptables save`
 
 ### Logs
 Common log locations:
@@ -228,12 +289,6 @@ This is a more recent utility to view logs generated by `systemd-journald`. `sys
 **Note:** Patterns are matched as case _insensitive_ by default. Override this with `--case-sensitive`
 
 ### Load
-
-#### General
-TODO ======================================================================================================
-top
-htop
-
 #### CPU
 `vmstat 1` - short for virtual memory stat will print a summary of key server statistics on each line for (1) second, eg:
 
@@ -279,7 +334,6 @@ Example output:
 14:38:03         4466    1.03    0.00    0.00    1.03     0  aws
 14:38:03        30026    3.09    0.00    0.00    3.09     0  java
 ```
-
 
 #### IO
 `iostat -xz 1` - workload and performance for block devices. Columns to watch:
@@ -401,9 +455,18 @@ The following `ss` command will list the unique quadruplets (sport, saddress, dp
 
 ### Networking
 TODO ======================================================================================================
-iptables (nat)
 nmap
-tcpdump
+
+#### tcpdump
+- All traffic on the interface: `sudo tcpdump -i eth0`
+- Filter traffic by IP (either going or to): `sudo tcpdump host 1.1.1.1`
+- Filter traffic by _source_ IP: `sudo tcpdump src 1.1.1.1` or _destination_ IP: `sudo tcpdump dst 10.3.0.1`
+- HTTPS traffic: `sudo tcpdump -nnSX port 443`
+- HTTPS traffic, exit after 5 packets which match query: `sudo tcpdump -nnSX port 443 -c 5`
+- Filter traffic by network: `sudo tcpdump net 1.1.1.0/24`
+- Filter traffic by port: `sudo tcpdump port 5432` or `sudo tcpdump src port 1234`
+- Filter traffic going to 192.168.0.2 that is not ICMP: `sudo tcpdump dst 192.168.0.2 and src net and not icmp` 
+- Filter traffic by protocol: `sudo tcpdump icmp`
 
 #### Sockets
 Netcat (`nc`) can be used to run port scans and listen on ports to check for connectivity
@@ -469,10 +532,31 @@ Netcat (`nc`) can be used to run port scans and listen on ports to check for con
 **Note:** The rest means, 1 query requested, 1 answer given, 3 authoritative nameservers and an additional 6 non-auth NS.
 
 ### Processes
+TODO ======================================================================================================
+top
+htop
 
+#### Zombie Processes
+Parent processes will typically create child processes. When these child processes complete, they use the `exit` system call but they still have an entry in the process table as being in a `Terminated State`. The reason for this is for the parent process to read the exit status of the child first. Under normal operation, the parent will read the child's exit status via the `wait` system call and get "reaped" by the system - the child entry will get removed from the process table. The time between the child process exiting and getting reaped is when it's called a "Zombie Process".
+
+If the parent process fails to read the exit code of the child, then Zombie processes will build up, taking resources by filling up the process table. Running `ps aux | grep 'Z'` is one way of viewing zombie processes on the system. To kill them, the parent process needs to be killed
+
+- Listing zombie processes: `ps axo pid=,stat= | awk '$2~/^Z/ { print }'`
+- Finding the parent process ID of a zombie process (with a PID of 1234): `pstree -p -s 1234`. 
+
+### Disk
+- Disk space on file system (human readable numbers): `df -h`
+- Size of directories (max depth of 1) with sort: `du -mh --max-depth 1 | sort -h`
+- Check which directories have the largest number of files: `sudo find . -xdev -type f | cut -d "/" -f 2 | sort | uniq -c | sort -n`
+
+#### Inodes
+Inodes (index nodes) keep track of data at the block level. They are a system wide unique identifier which contains metadata about the storage blocks which make up the data they represent, permissions, file size, timestamps.
+Inodes are recycled when all links to the data have been removed but there is still a finite collection of idnoes a system can assign. Running `df -i` will tell you the inode useful per volume. 
+
+**Typical Issues**
+- Linux will create a file to represent a connection state. If a server has many connections to it, these will all count towards the inode usage in the volume the files reside in. If the inode count is exhausted, then the server won't be able to create a new file and therefore won't be able to open a new connection.
 
 ### SSH
-TODO ======================================================================================================
 Generate ssh key (private/public):
 ```bash
 ssh-keygen -t ed25519 -C "eddy" -f ~/.ssh/private_key_filename
@@ -484,7 +568,13 @@ ssh-keygen -t rsa -b 4096 -C "eddy" -f ~/.ssh/private_key_filename
 ```
 
 #### Session
-TODO ======================================================================================================
 - Standard session: `ssh -i ~/.ssh/private_key user@host`
-- Port forwarding
-- Tunnel
+
+##### Port forwarding (Tunneling)
+This is where you use a SSH session to a remote host to tunnel other traffic through:
+```bash
+ssh -L 15432:my.postgres.endpoint:5432 eddys@bastion.host -i ~/.ssh/id_rsa
+```
+This opens a connection the bastion.host over SSH and opens a local port on my computer for 15432 which will route to a postgres endpoint on port 5432. This is useful for when my computer doesn't have direct access to postgres but the bastion host does. As long as I can connect to the bastion over SSH, I can tunnel local traffic for port 15432 to the bastion.
+
+Therefore, if I wanted to connect to postgres after establishing the above connection, I could specify port 15432 in psql and connect to the instance.
