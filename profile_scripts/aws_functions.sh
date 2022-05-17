@@ -52,3 +52,10 @@ function add-local-ip-to-sec-group() {
 function get-vpc() {
   aws ec2 describe-vpcs --region $1 --filter Name=tag:Name,Values=sandbox_dev --query 'Vpcs[0].VpcId' --output text
 }
+
+function aws-populate-tokens() {
+	AWS_ACCESS_KEY_ID=$(aws configure get aws_access_key_id --profile $1)
+	AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key --profile $1)
+	AWS_SESSION_TOKEN=$(aws configure get aws_session_token --profile $1)
+}
+
