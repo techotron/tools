@@ -11,3 +11,17 @@ _command to run_ (command to run)
 ```
 echo "pod1 pod2 pod3" | gxargs -P0 -I{} -d " " kubectl exec -i {} -c app -- ls
 ```
+
+
+Curl sequential set of IPs from 1 - 100:
+```bash
+seq 1 100 | xargs -I{} curl 10.10.10.{} -w "%{remote_ip} ----> %{response_code}\n" -s -o /dev/null
+```
+
+Output:
+```
+10.10.10.1 ----> 200
+10.10.10.2 ----> 200
+10.10.10.3 ----> 200
+...
+```
