@@ -25,3 +25,8 @@ Output:
 10.10.10.3 ----> 200
 ...
 ```
+
+Delete all local branches (except for "main" and "master") which are merged
+```bash
+git branch --merged | grep -Ev "(^\*|main|master)" | xargs git branch -d
+```
