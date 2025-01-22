@@ -30,3 +30,15 @@ Delete all local branches (except for "main" and "master") which are merged
 ```bash
 git branch --merged | grep -Ev "(^\*|main|master)" | xargs git branch -d
 ```
+
+CURL stats to multiple hosts, specifying a resolver
+```bash
+ printf "facebook\n yahoo\n google\n" | xargs -P0 -I{} curl --resolve www.{}.com:443:127.0.0.1 https://www.\{\}.com -s -o /dev/null -w "[%{url}] ==> rc:%{response_code} ta:%{time_appconnect} tt:%{time_total}\n"
+```
+
+Output:
+```
+[https://www.google.com] ==> rc:200 ta:0.050301 tt:0.160478
+[https://www.facebook.com] ==> rc:200 ta:0.046272 tt:0.243306
+[https://www.yahoo.com] ==> rc:200 ta:0.044155 tt:0.970448
+```
